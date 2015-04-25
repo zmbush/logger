@@ -9,4 +9,6 @@ license = "MIT"
 
 [dependencies]
 iron = "*"
-
+time = "*"
+typemap = "*"
+term = "*"

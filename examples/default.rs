@@ -2,7 +2,7 @@
 extern crate iron;
 extern crate logger;
 
-use iron::{Chain, ChainBuilder, Iron, IronResult, Request, Response};
+use iron::{Chain, Iron, IronResult, Request, Response};
 
 use logger::Logger;
 
@@ -12,7 +12,7 @@ use logger::Logger;
 fn main() {
     let (logger_before, logger_after) = Logger::new(None);
 
-    let mut chain = ChainBuilder::new(no_op_handler);
+    let mut chain = Chain::new(no_op_handler);
 
     // Link logger_before as your first before middleware.
     chain.link_before(logger_before);
@@ -20,7 +20,7 @@ fn main() {
     // Link logger_after as your *last* after middleware.
     chain.link_after(logger_after);
 
-    Iron::new(chain).listen("127.0.0.1:3000");
+    Iron::new(chain).http("127.0.0.1:3000").unwrap();
 }
 
 fn no_op_handler(_: &mut Request) -> IronResult<Response> {
